@@ -1,11 +1,9 @@
 package org.juandavyc;
 
+import org.juandavyc.configs.StoneContext;
 import org.juandavyc.factories.MindFactory;
 import org.juandavyc.factories.SpaceFactory;
-import org.juandavyc.models.MindStone;
-import org.juandavyc.models.PowerStone;
-import org.juandavyc.models.RealityStone;
-import org.juandavyc.models.Stone;
+import org.juandavyc.models.*;
 import org.juandavyc.prototypes.Prototypes;
 import org.juandavyc.services.GauntletService;
 import org.juandavyc.services.GauntletServiceImpl;
@@ -26,10 +24,6 @@ public class Main {
 //        power.usePower();
 //        System.out.println("----");
 //        reality.usePower();
-
-        final var gauntletService = new GauntletServiceImpl();
-        //gauntletService.reality = null;
-        gauntletService.useGauntlet("");
 
 //        var r1 = RealityStoneSingleton.getInstance();
 //        var r2 = RealityStoneSingleton.getInstance();
@@ -55,17 +49,46 @@ public class Main {
 //        System.out.println(mindProto2);
 //        System.out.println(System.identityHashCode(mindProto2));
 //
+//        System.setProperty("scope","singleton"); //("scope","prototype");
+//
+//        final var mindStoneFactory = new MindFactory();
+//        var mindStone = mindStoneFactory.createStone();
+//
+//        final var spacetoneFactory = new SpaceFactory();
+//        var spaceStone = spacetoneFactory.createStone();
+//
+//        System.out.println(mindStone);
+//        System.out.println(spaceStone);
 
-        System.setProperty("scope","singleton"); //("scope","prototype");
+//        MindStone mindFactory = (MindStone) new MindFactory().createStone();
+//        SpaceStone spaceFactory = (SpaceStone) new SpaceFactory().createStone();
+//
+////      // via constructor
+//        final var gauntletService = new GauntletServiceImpl(
+//                mindFactory,
+//                spaceFactory
+//        );
+//
+//
+////        // inyeccion via setter
+////        gauntletService.setMind(mindFactory.createStone());
+////        gauntletService.setSpace(spaceFactory.createStone());
+////
+//       gauntletService.useGauntlet("mind");
+////        gauntletService.useGauntlet("space");
+////
+//       gauntletService.useFullPower();
 
-        final var mindStoneFactory = new MindFactory();
-        var mindStone = mindStoneFactory.createStone();
 
-        final var spacetoneFactory = new SpaceFactory();
-        var spaceStone = spacetoneFactory.createStone();
+        final var gauntletService = StoneContext.setContext(
+                pre -> System.out.println("Do something 1"),
+                pre -> System.out.println("Do something 2")
+        );
 
-        System.out.println(mindStone);
-        System.out.println(spaceStone);
+        gauntletService.useGauntlet("mind");
 
+        gauntletService.useFullPower();
+
+        StoneContext.destroyContext(gauntletService);
     }
 }

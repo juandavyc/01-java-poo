@@ -31,4 +31,8 @@ public abstract class Stone implements Serializable /*pueda clonar*/ {
 
     public abstract void  usePower();
 
+    public void clear(){
+        System.out.println("clear");
+    }
+
 }
