@@ -3,13 +3,15 @@ package org.juandavyc.models;
 
 import lombok.*;
 
+import java.io.Serializable;
+
 // @AllArgsConstructor
 @Getter
 @Setter
 @EqualsAndHashCode
 @ToString
 
-public abstract class Stone {
+public abstract class Stone implements Serializable /*pueda clonar*/ {
 
     protected String color;
     protected String name;
